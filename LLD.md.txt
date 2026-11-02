@@ -1,0 +1,1 @@
+This compatibility file is retained for older links. The current low-level design is [docs/LLD.md](docs/LLD.md).

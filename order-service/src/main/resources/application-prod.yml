@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: "${ORDERFLOW_DB_URL:jdbc:h2:file:/data/harbor-orders;DB_CLOSE_ON_EXIT=FALSE}"
+    username: ${ORDERFLOW_DB_USERNAME:sa}
+    password: ${ORDERFLOW_DB_PASSWORD:}
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+orderflow:
+  seed-users: false
+  users-file: ${ORDERFLOW_USERS_FILE:}
+  embedded-promote: false
+  # The worker runs every five minutes; make a pending order eligible on
+  # the next poll so the configured cadence does not compound into ten minutes.
+  promote-delay-ms: ${ORDERFLOW_PROMOTE_DELAY_MS:0}
+  promote-interval-ms: ${ORDERFLOW_PROMOTE_INTERVAL_MS:300000}

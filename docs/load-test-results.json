@@ -1,0 +1,47 @@
+{
+  "tested_at_utc": "2026-11-02T08:55:25+00:00",
+  "base_url": "http://127.0.0.1:8080",
+  "users": 8,
+  "duration_seconds": 20.0,
+  "requests": 27748,
+  "requests_per_second": 1387.4,
+  "successful_requests": 27748,
+  "failed_requests": 0,
+  "operations": [
+    {
+      "request": "GET /api/catalog",
+      "count": 9250,
+      "p50_ms": 4.44,
+      "p95_ms": 9.26,
+      "p99_ms": 18.99,
+      "max_ms": 516.0,
+      "statuses": {
+        "200": 9250
+      }
+    },
+    {
+      "request": "GET /api/orders/{id}",
+      "count": 9249,
+      "p50_ms": 4.42,
+      "p95_ms": 9.18,
+      "p99_ms": 19.05,
+      "max_ms": 954.17,
+      "statuses": {
+        "200": 9249
+      }
+    },
+    {
+      "request": "GET /api/orders?limit=20",
+      "count": 9249,
+      "p50_ms": 4.47,
+      "p95_ms": 9.32,
+      "p99_ms": 19.62,
+      "max_ms": 565.99,
+      "statuses": {
+        "200": 9249
+      }
+    }
+  ],
+  "errors": [],
+  "scope": "Authenticated reads: catalog, paged order list, and one order lookup. One order is created as setup."
+}

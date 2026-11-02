@@ -1,0 +1,1 @@
+This compatibility file is retained for older links. The current high-level design is [docs/HLD.md](docs/HLD.md).

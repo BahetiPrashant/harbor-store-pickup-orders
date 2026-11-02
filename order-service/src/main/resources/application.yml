@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  max-http-request-header-size: 16KB
+spring:
+  application:
+    name: harbor-order-service
+  jackson:
+    default-property-inclusion: non_null
+orderflow:
+  seed-users: ${ORDERFLOW_SEED_USERS:true}
+  seed-password: ${ORDERFLOW_SEED_PASSWORD:local-dev-password}
+  jwt-secret: ${JWT_SECRET:local-dev-jwt-secret-at-least-32-bytes}
+  internal-token: ${INTERNAL_TOKEN:local-dev-internal-token-32bytes}
+  promote-delay-ms: ${ORDERFLOW_PROMOTE_DELAY_MS:30000}
+  embedded-promote: ${ORDERFLOW_EMBEDDED_PROMOTE:true}
+  promote-interval-ms: ${ORDERFLOW_PROMOTE_INTERVAL_MS:15000}

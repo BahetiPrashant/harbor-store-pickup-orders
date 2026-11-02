@@ -1,0 +1,1 @@
+This compatibility file is retained for older links. Use [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) for current setup, configuration, production users, and test commands.

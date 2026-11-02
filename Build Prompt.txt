@@ -1,0 +1,38 @@
+# Current implementation brief
+
+This file replaces the original build prompt, which described the initial in-memory implementation. For the current source of truth, see `README.md`, `docs/HLD.md`, `docs/LLD.md`, `docs/DEVELOPER_GUIDE.md`, `docs/REVIEWER_BRIEF.md`, and `docs/AI_USAGE.md`.
+
+## Assignment requirements
+
+- Customers create orders containing multiple catalog items.
+- Customers retrieve their own orders; operators can retrieve orders by ID.
+- Orders move through `PENDING → PROCESSING → SHIPPED → DELIVERED`.
+- A background worker checks every five minutes in production and promotes pending orders. Local development uses a shorter test cadence.
+- Customers may list their orders, optionally filtered by status, and cancel only while an order is `PENDING`.
+
+## Current architecture
+
+- Java 21 / Spring Boot owns order rules, authorization, transitions, and persistence adapters.
+- Local Java development uses an indexed in-memory repository. Secure Compose uses JDBC/H2 on a named volume so orders persist across Java restarts. The H2 deployment is single-node.
+- The Go worker polls Java's authenticated internal due-order API. Run either the embedded Java scheduler or the Go worker locally, not both.
+- Python FastAPI returns catalog-grounded draft suggestions and never creates or stores orders.
+- Next.js provides the browser UI and proxies API requests; the bearer token remains in an HTTP-only session cookie.
+
+## Local development
+
+Start Java in `order-service` with `mvn -s maven-settings.xml spring-boot:run`, Python in `intake-service` with `py -3.12 -m uvicorn app.main:app --host 127.0.0.1 --port 8081`, and Next.js in `web` with `npm ci` followed by `npm run dev`. Open `http://localhost:3000/login`. Local accounts are `ada@harbor.example` and `ops@harbor.example`; both use `local-dev-password`.
+
+The default local Java process uses memory and its embedded scheduler (30-second eligibility delay, 15-second poll interval). For Go-worker mode, restart Java with `ORDERFLOW_EMBEDDED_PROMOTE=false`; start the worker with `ORDER_API_URL=http://localhost:8080`, `INTERNAL_TOKEN=local-dev-internal-token-32bytes`, and `INTERVAL=15s`.
+
+## Persistence and production configuration
+
+The secure Compose file enables the `prod` profile, H2 file storage at `/data/harbor-orders`, and the Go worker's five-minute polling interval. It requires independent private values for `JWT_SECRET`, `INTERNAL_TOKEN`, and `ORDERFLOW_DB_PASSWORD`, plus a read-only `ORDERFLOW_USERS_FILE_HOST` containing Argon2id password hashes. Production refuses seeded demo accounts and weak or missing secrets. See `docs/DEVELOPER_GUIDE.md` for provisioning and startup commands.
+
+## Verification commands
+
+- Java: `mvn -s maven-settings.xml test` from `order-service`.
+- Python: `py -3.12 -m pytest` from `intake-service`.
+- Go: `go test ./...` from `status-worker`.
+- Web: `npm ci` and `npm run build` from `web`.
+
+The CI workflow runs those checks. The exact AI tools used, issues found, and corrections made are documented in `docs/AI_USAGE.md`.

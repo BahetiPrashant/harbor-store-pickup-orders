@@ -1,0 +1,35 @@
+services:
+  order-service:
+    build:
+      context: ../..
+      dockerfile: order-service/Dockerfile
+    ports: ["127.0.0.1:8080:8080"]
+    environment:
+      ORDERFLOW_SEED_USERS: "true"
+      ORDERFLOW_SEED_PASSWORD: local-dev-password
+      ORDERFLOW_EMBEDDED_PROMOTE: "false"
+      JWT_SECRET: local-dev-jwt-secret-at-least-32-bytes
+      INTERNAL_TOKEN: local-dev-internal-token-32bytes
+  intake-service:
+    build:
+      context: ../..
+      dockerfile: intake-service/Dockerfile
+    depends_on: [order-service]
+  status-worker:
+    build:
+      context: ../..
+      dockerfile: status-worker/Dockerfile
+    environment:
+      ORDER_API_URL: http://order-service:8080
+      INTERNAL_TOKEN: local-dev-internal-token-32bytes
+      INTERVAL: 15s
+    depends_on: [order-service]
+  web:
+    build:
+      context: ../..
+      dockerfile: web/Dockerfile
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      ORDER_API_URL: http://order-service:8080
+      INTAKE_API_URL: http://intake-service:8081
+    depends_on: [order-service, intake-service]

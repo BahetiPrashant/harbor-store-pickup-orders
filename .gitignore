@@ -1,0 +1,10 @@
+node_modules/
+.next/
+target/
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+.env
+deploy/compose/users.local.json
+order-service/data/

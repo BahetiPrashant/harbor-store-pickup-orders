@@ -1,0 +1,46 @@
+services:
+  order-service:
+    build:
+      context: ../..
+      dockerfile: order-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      ORDERFLOW_ENV: prod
+      ORDERFLOW_SEED_USERS: "false"
+      ORDERFLOW_EMBEDDED_PROMOTE: "false"
+      ORDERFLOW_USERS_FILE: /run/secrets/orderflow-users.json
+      JWT_SECRET: "${JWT_SECRET:?Set JWT_SECRET to a private random value of at least 32 bytes}"
+      INTERNAL_TOKEN: "${INTERNAL_TOKEN:?Set INTERNAL_TOKEN to a different private random value of at least 32 bytes}"
+      ORDERFLOW_DB_PASSWORD: "${ORDERFLOW_DB_PASSWORD:?Set ORDERFLOW_DB_PASSWORD to a private random value of at least 32 bytes}"
+    volumes:
+      - type: bind
+        source: "${ORDERFLOW_USERS_FILE_HOST:?Set ORDERFLOW_USERS_FILE_HOST to a JSON user file path}"
+        target: /run/secrets/orderflow-users.json
+        read_only: true
+      - order-data:/data
+  intake-service:
+    build:
+      context: ../..
+      dockerfile: intake-service/Dockerfile
+    depends_on: [order-service]
+  status-worker:
+    build:
+      context: ../..
+      dockerfile: status-worker/Dockerfile
+    environment:
+      ORDER_API_URL: http://order-service:8080
+      ORDERFLOW_ENV: prod
+      INTERNAL_TOKEN: "${INTERNAL_TOKEN:?Set INTERNAL_TOKEN to the same private token used by order-service}"
+      INTERVAL: 5m
+    depends_on: [order-service]
+  web:
+    build:
+      context: ../..
+      dockerfile: web/Dockerfile
+    ports: ["3000:3000"]
+    environment:
+      ORDER_API_URL: http://order-service:8080
+      INTAKE_API_URL: http://intake-service:8081
+    depends_on: [order-service, intake-service]
+volumes:
+  order-data:

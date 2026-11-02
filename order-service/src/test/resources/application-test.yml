@@ -1,0 +1,7 @@
+orderflow:
+  seed-users: true
+  seed-password: test-password
+  jwt-secret: test-only-jwt-secret-longer-than-32-bytes
+  internal-token: test-only-internal-token-longer-than-32
+  promote-delay-ms: 0
+  embedded-promote: false

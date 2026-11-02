@@ -1,0 +1,12 @@
+[
+  {"sku":"HDMI-1M","name":"HDMI cable 1m","description":"One meter of braided HDMI for a screen on the same desk. Gold contacts and a slim plug, with just enough length to route behind a monitor arm.","tags":["hdmi","cable"],"unitPriceMinor":999,"currency":"USD","active":true},
+  {"sku":"HDMI-2M","name":"HDMI cable 2m","description":"Two meters for a display across the credenza or up on the wall. The same braid and plug, with slack that does not tug the port.","tags":["hdmi","cable"],"unitPriceMinor":1499,"currency":"USD","active":true},
+  {"sku":"KEY-1","name":"Keyboard","description":"A compact keyboard with a low front lip so your wrists stay level. Quiet keys, a solid frame, and room left on the desk for the mouse.","tags":["keyboard"],"unitPriceMinor":4999,"currency":"USD","active":true},
+  {"sku":"MOUSE-1","name":"Mouse","description":"A wireless mouse with a soft matte shell and a steady sensor. Light enough to move on wood, and it pairs once.","tags":["mouse"],"unitPriceMinor":2499,"currency":"USD","active":true},
+  {"sku":"USB-C","name":"USB-C cable","description":"A short USB-C cable for the laptop, the hub, or the charger. Short on purpose, so it stays on the desk instead of in a tangle.","tags":["usb","cable"],"unitPriceMinor":799,"currency":"USD","active":true},
+  {"sku":"HUB-4","name":"USB hub","description":"Four ports in a small aluminum bar, fed by one cable. Room for a drive, a keyboard, and a charger while the laptop keeps a port free.","tags":["hub","usb"],"unitPriceMinor":2999,"currency":"USD","active":true},
+  {"sku":"SSD-1","name":"Portable SSD","description":"A one-terabyte portable drive about as thick as a phone. It wakes when you plug it in and sleeps when you do not.","tags":["ssd","drive"],"unitPriceMinor":8999,"currency":"USD","active":true},
+  {"sku":"CHG-65","name":"65W charger","description":"A 65 watt USB-C charger with folding prongs that fits in a jacket pocket. Enough for a laptop, then a phone.","tags":["charger"],"unitPriceMinor":3499,"currency":"USD","active":true},
+  {"sku":"CASE-1","name":"Laptop sleeve","description":"A padded sleeve with a soft lining and a firm outer shell. It slips into a backpack and keeps a 14-inch laptop from knocking around.","tags":["sleeve","case"],"unitPriceMinor":1999,"currency":"USD","active":true},
+  {"sku":"OLD-1","name":"Retired adapter","description":"No longer sold","tags":["adapter"],"unitPriceMinor":500,"currency":"USD","active":false}
+]
